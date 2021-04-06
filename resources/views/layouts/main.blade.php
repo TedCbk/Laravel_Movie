@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Laravel Movie</title>
+    <title>LaraMovies</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
     <link rel="stylesheet" href="/css/app.css">
@@ -16,8 +16,8 @@
         <div class="container p-4 mx-auto flex flex-col md:flex-row items-center justify-between px-4 py-6">
             <ul class="flex flex-col md:flex-row items-center ">
                 <li>
-                    <a href="#">
-                        <img src="{{ asset('images/800px-Netflix_2015_N_logo.svg.png') }}" alt="app" class="w-5">
+                    <a href="{{ route('movies.index') }}">
+                        <img src="{{ asset('images/laramovies_logo.png') }}" alt="app" class="w-32">
                     </a>
                 </li>
                 <li class="md:ml-16 mt-3 md:mt-0">

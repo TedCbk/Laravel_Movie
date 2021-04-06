@@ -8,8 +8,7 @@
         <div class="conteiner mx-auto px-4 py-16 flex flex-col md:flex-row">
 
             <div class="flex-none">
-                <img src="{{ 'https://image.tmdb.org/t/p/w500' . $movie['poster_path'] }}" alt="netflix"
-                    class="w-64 md:w-96">
+                <img src="{{ 'https://image.tmdb.org/t/p/w500' . $movie['poster_path'] }}" alt="netflix" class="w-64">
             </div>
             <div class="md:ml-24">
                 <h2 class="text-4xl font-semibold">{{ $movie['title'] }}</h2>
@@ -32,23 +31,24 @@
                     <h4 class="text-white font-semibold">Featured Cast</h4>
                     <div class="flex mt-4">
                         @foreach ($movie['credits']['crew'] as $crew)
-                            @if ($loop->index <2)
-                            <div class="mr-8">
-                                <div>{{ $crew['name'] }}</div>
-                                <div class="text-sm text-gray-400">{{$crew['job']}}</div>
-                            </div>
+                            @if ($loop->index < 2)
+                                <div class="mr-8">
+                                    <div>{{ $crew['name'] }}</div>
+                                    <div class="text-sm text-gray-400">{{ $crew['job'] }}</div>
+                                </div>
                             @endif
                         @endforeach
                     </div>
                 </div>
-
-                <div class="mt-12">
-                    <button
-                        class="flex items-center bg-yellow-500 text-gray-900 rounded font-semibold px-5 py-4 hover:bg-yellow-600 transition ease-in-out duration-150">
-                        <i class="far fa-play-circle"></i>
-                        <span class="ml-2">Play Trailer</span>
-                    </button>
-                </div>
+                @if (count($movie['videos']['results']) > 0)
+                    <div class="mt-12">
+                        <a href="https://youtube.com/watch?v={{ $movie['videos']['results']['0']['key'] }}"
+                            class="flex inline-flex items-center bg-yellow-500 text-gray-900 rounded font-semibold px-5 py-4 hover:bg-yellow-600 transition ease-in-out duration-150">
+                            <i class="far fa-play-circle"></i>
+                            <span class="ml-2">Play Trailer</span>
+                        </a>
+                    </div>
+                @endif
             </div>
 
         </div>
@@ -60,66 +60,22 @@
         <div class="container mx-auto px-4 py-16">
             <h2 class="text-4xl font-semibold">Cast</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-5 gap-8">
-                <div class="mt-8">
-                    <a href="">
-                        <img src="{{ asset('images/800px-Netflix_2015_N_logo.svg.png') }}" alt="teds"
-                            class="hover:opacity-75 transition rease-n-out duration-150">
-                    </a>
-                    <div class="mt-2">
-                        <a href="" class="text-lg mt-2 hover:text-gray:300">Ted's Movie</a>
-                        <div class="text-gray-400 text-sm">
-                            Action, Thriller, Comedy
+                @foreach ($movie['credits']['cast'] as $cast)
+                    @if ($loop->index < 5)
+                        <div class="mt-8">
+                            <a href="">
+                                <img src="{{ 'https://image.tmdb.org/t/p/w200/' . $cast['profile_path'] }}" alt="cast"
+                                    class="hover:opacity-75 transition rease-n-out duration-150">
+                            </a>
+                            <div class="mt-2">
+                                <a href="" class="text-lg mt-2 hover:text-gray:300">{{ $cast['name'] }}</a>
+                                <div class="text-gray-400 text-sm">
+                                    {{ $cast['character'] }}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="mt-8">
-                    <a href="">
-                        <img src="{{ asset('images/800px-Netflix_2015_N_logo.svg.png') }}" alt="teds"
-                            class="hover:opacity-75 transition rease-n-out duration-150">
-                    </a>
-                    <div class="mt-2">
-                        <a href="" class="text-lg mt-2 hover:text-gray:300">Ted's Movie</a>
-                        <div class="text-gray-400 text-sm">
-                            Action, Thriller, Comedy
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-8">
-                    <a href="">
-                        <img src="{{ asset('images/800px-Netflix_2015_N_logo.svg.png') }}" alt="teds"
-                            class="hover:opacity-75 transition rease-n-out duration-150">
-                    </a>
-                    <div class="mt-2">
-                        <a href="" class="text-lg mt-2 hover:text-gray:300">Ted's Movie</a>
-                        <div class="text-gray-400 text-sm">
-                            Action, Thriller, Comedy
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-8">
-                    <a href="">
-                        <img src="{{ asset('images/800px-Netflix_2015_N_logo.svg.png') }}" alt="teds"
-                            class="hover:opacity-75 transition rease-n-out duration-150">
-                    </a>
-                    <div class="mt-2">
-                        <a href="" class="text-lg mt-2 hover:text-gray:300">Ted's Movie</a>
-                        <div class="text-gray-400 text-sm">
-                            Action, Thriller, Comedy
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-8">
-                    <a href="">
-                        <img src="{{ asset('images/800px-Netflix_2015_N_logo.svg.png') }}" alt="teds"
-                            class="hover:opacity-75 transition rease-n-out duration-150">
-                    </a>
-                    <div class="mt-2">
-                        <a href="" class="text-lg mt-2 hover:text-gray:300">Ted's Movie</a>
-                        <div class="text-gray-400 text-sm">
-                            Action, Thriller, Comedy
-                        </div>
-                    </div>
-                </div>
+                    @endif
+                @endforeach
             </div>
         </div>
     </div>
@@ -129,42 +85,17 @@
         <div class="container mx-auto px-4 py-16">
             <h2 class="text-4xl font-semibold">Images</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-                <div class="mt-8">
-                    <a href="#">
-                        <img src="{{ asset('images/800px-Netflix_2015_N_logo.svg.png') }}" alt="netflix"
-                            class="hover:opacity-75 transition ease-in-out duration-150">
-                    </a>
-                </div>
-                <div class="mt-8">
-                    <a href="#">
-                        <img src="{{ asset('images/800px-Netflix_2015_N_logo.svg.png') }}" alt="netflix"
-                            class="hover:opacity-75 transition ease-in-out duration-150">
-                    </a>
-                </div>
-                <div class="mt-8">
-                    <a href="#">
-                        <img src="{{ asset('images/800px-Netflix_2015_N_logo.svg.png') }}" alt="netflix"
-                            class="hover:opacity-75 transition ease-in-out duration-150">
-                    </a>
-                </div>
-                <div class="mt-8">
-                    <a href="#">
-                        <img src="{{ asset('images/800px-Netflix_2015_N_logo.svg.png') }}" alt="netflix"
-                            class="hover:opacity-75 transition ease-in-out duration-150">
-                    </a>
-                </div>
-                <div class="mt-8">
-                    <a href="#">
-                        <img src="{{ asset('images/800px-Netflix_2015_N_logo.svg.png') }}" alt="netflix"
-                            class="hover:opacity-75 transition ease-in-out duration-150">
-                    </a>
-                </div>
-                <div class="mt-8">
-                    <a href="#">
-                        <img src="{{ asset('images/800px-Netflix_2015_N_logo.svg.png') }}" alt="netflix"
-                            class="hover:opacity-75 transition ease-in-out duration-150">
-                    </a>
-                </div>
+                @foreach ($movie['images']['backdrops'] as $image)
+                    @if ($loop->index < 9)
+                        <div class="mt-8">
+                            <a href="#">
+                                <img src="{{ 'https://image.tmdb.org/t/p/w500/'.$image['file_path'] }}" alt="backdrops"
+                                    class="hover:opacity-75 transition ease-in-out duration-150">
+                            </a>
+                        </div>
+                    @endif
+                @endforeach
+
             </div>
         </div>
     </div>
