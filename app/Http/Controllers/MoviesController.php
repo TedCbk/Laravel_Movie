@@ -14,7 +14,7 @@ class MoviesController extends Controller
      */
     public function index()
     {
-        // Function to call API for popular movies usig the token stored on services
+        // Function to call API for popular movies using the token stored on services
         $popularMovies = Http::withToken(config('services.tmdb.token'))
         ->get('https://api.themoviedb.org/3/movie/popular')
         ->json()['results'];
@@ -69,8 +69,15 @@ class MoviesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
+    {   
+        // Function to call API for a movie detail and append to response method to join the cast,videos and images
+        $movie = Http::withToken(config('services.tmdb.token'))
+        ->get('https://api.themoviedb.org/3/movie/'.$id.'?append_to_response=credits,videos,images')
+        ->json();
+
+        return view('show', [
+            'movie' => $movie,
+            ]);
     }
 
     /**
